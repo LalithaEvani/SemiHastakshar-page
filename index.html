@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="SemiHastakshar: Generalizable Indic Handwritten OCR through Semi-Supervised Learning (ICVGIP 2025) — training on large-scale unlabeled handwriting to generalize across real-world Indic scripts.">
+  <meta name="keywords" content="Indic handwritten text recognition, OCR, semi-supervised learning, pseudo-labeling, ICVGIP 2025">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SemiHastakshar: Generalizable Indic Handwritten OCR</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Project Styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="hero-badge">ICVGIP 2025</div>
+  <h1><span class="highlight">SemiHastakshar</span>: Generalizable Indic Handwritten OCR through Semi-Supervised Learning</h1>
+  <p class="subtitle">Training on large-scale unlabeled handwriting collected from the web to generalize better to real-world Indic handwriting.</p>
+
+  <!-- Authors -->
+  <div class="authors">
+    <span><a href="https://lalithaevani.github.io/" target="_blank">Lalitha Evani</a></span>
+    <span>Ajoy Mondal</span>
+    <span>Jawahar C. V.</span>
+  </div>
+  <div class="affiliation">
+    International Institute of Information Technology, Hyderabad, India
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-row">
+    <a href="#" class="btn btn-primary" onclick="openPDF('static/pdfs/paper.pdf','SemiHastakshar (ICVGIP 2025)');return false;">
+      <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+    </a>
+    <a href="https://github.com/LalithaEvani/SemiHastakshar" class="btn" target="_blank">
+      <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+    </a>
+    <a href="https://doi.org/10.1145/3774521.3774605" class="btn" target="_blank">
+      <span class="icon"><i class="fas fa-external-link-alt"></i></span><span>ACM DL</span>
+    </a>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <strong>TL;DR</strong> &mdash; Indic Handwritten Text Recognition models trained only on small, curated benchmarks struggle to generalize to the messy variety of real-world handwriting. We collect a large unlabeled corpus of in-the-wild Indic handwriting from the internet and train with high-confidence pseudo-labeling, iteratively improving the model's robustness across writers and scripts &mdash; without needing more manually labeled data.
+  </div>
+
+  <!-- Teaser -->
+  <div class="figure fig-medium" style="margin-top:48px;">
+    <img src="static/images/teaser.png" alt="Sample word-level handwritten images across nine Indic scripts">
+    <div class="figure-caption"><strong>Figure 3.</strong> Sample word-level images from the Indic-HW-Wild dataset, illustrating diversity in writing styles and illumination.</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card fade-in">
+      <div class="stat-number">2.4M+</div>
+      <div class="stat-label">Unlabeled word<br>images collected</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="stat-number">9</div>
+      <div class="stat-label">Indic scripts<br>covered</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="stat-number">-19%</div>
+      <div class="stat-label">WER, Telugu<br>(out-of-domain)</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="stat-number">-14.4%</div>
+      <div class="stat-label">WER, Hindi<br>(out-of-domain)</div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════ ABSTRACT ══════════ -->
+<section>
+  <div class="container fade-in">
+    <div class="section-label">Abstract</div>
+    <h2>Learning from the Wild, Unlabeled Web</h2>
+    <p>Handwritten Text Recognition (HTR) remains a challenging task, especially in Indic languages, due to varied handwriting styles, complex character structures, and the scarcity of annotated data. While deep learning models have shown promising results on curated benchmarks, their performance often degrades in real-world scenarios with high variability in writing.</p>
+    <p>To address this, we propose a semi-supervised approach, SemiHastakshar, that leverages large-scale unlabeled word-level images collected from diverse sources across the Internet. We employ a high-confidence pseudo-labeling strategy to train on unlabeled samples iteratively. It allows the model to learn from a wider distribution of handwriting styles and improve generalization across writers. Our method demonstrates that combining a small amount of labeled data with a large unlabeled corpus leads to more robust HTR models for Indic scripts, advancing scalable recognition in low-resource settings.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ KEY CONTRIBUTIONS ══════════ -->
+<section>
+  <div class="container-wide fade-in">
+    <div class="section-label">Key Contributions</div>
+    <h2>What We Contribute</h2>
+    <div class="accent-cards">
+      <div class="accent-card">
+        <h4>1. Indic-HW-Wild dataset</h4>
+        <p>A large-scale collection of unlabeled word-level handwritten images spanning nine Indic languages, sourced from diverse online repositories.</p>
+      </div>
+      <div class="accent-card">
+        <h4>2. Semi-supervised training framework</h4>
+        <p>A generalized multi-script OCR model that leverages unlabeled samples via pseudo-labeling to improve recognition across varied handwriting styles.</p>
+      </div>
+      <div class="accent-card">
+        <h4>3. Dataset-specific fine-tuning without labels</h4>
+        <p>Significant accuracy gains from fine-tuning on unlabeled target-domain data alone, enabling personalized recognition in low-resource settings.</p>
+      </div>
+      <div class="accent-card">
+        <h4>4. Data&ndash;performance ablation</h4>
+        <p>An extensive ablation quantifying how the amount of labeled data affects final performance, to understand the data&ndash;performance trade-off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ METHOD ══════════ -->
+<section>
+  <div class="container-wide fade-in">
+    <div class="section-label">Method</div>
+    <h2>High-Confidence Pseudo-Labeling</h2>
+    <p>Starting from a base recognizer, SemiHastakshar runs the current best model over the unlabeled Indic-HW-Wild pool, keeps only predictions above a confidence threshold as pseudo-labels, and retrains on a mix of labeled and pseudo-labeled samples. This repeats for several cycles, each time refreshing the "best model" used to generate the next round of pseudo-labels.</p>
+
+    <div class="figure fig-wide">
+      <img src="static/images/architecture.png" alt="SemiHastakshar self-training architecture diagram">
+      <div class="figure-caption"><strong>Figure 4.</strong> Architecture of SemiHastakshar. Frozen components are denoted by a snowflake icon, trainable components by a fire icon. The process runs for <em>N</em> cycles, each selecting <em>m</em> samples from both labeled and pseudo-labeled data.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ RESULTS ══════════ -->
+<section>
+  <div class="container-wide fade-in">
+    <div class="section-label">Results</div>
+    <h2>Experimental Evaluation</h2>
+    <p>SemiHastakshar is compared against a PARSeq HTR baseline trained only on labeled data, both in-domain (IIIT-INDIC-HW-WORDS) and, more importantly, out-of-domain on unconstrained real-world handwriting (IIIT-INDIC-HW-UC).</p>
+
+    <h3>Out-of-Domain Comparison</h3>
+    <p class="table-subtitle">WER and CER on the unconstrained IIIT-INDIC-HW-UC test set &mdash; where the gains matter most. Bold indicates our best result.</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th rowspan="2">Language</th><th colspan="2">PARSeq HTR (baseline)</th><th colspan="2">SemiHastakshar</th></tr>
+          <tr><th>WER&darr;</th><th>CER&darr;</th><th>WER&darr;</th><th>CER&darr;</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Hindi</td><td>53.00</td><td>31.94</td><td class="cell-highlight">38.62</td><td class="cell-highlight">26.49</td></tr>
+          <tr><td>Bengali</td><td>41.71</td><td>21.58</td><td class="cell-highlight">29.09</td><td class="cell-highlight">14.86</td></tr>
+          <tr><td>Telugu</td><td>60.56</td><td>30.58</td><td class="cell-highlight">41.66</td><td class="cell-highlight">18.12</td></tr>
+          <tr><td>Gujarati</td><td>78.39</td><td>66.57</td><td class="cell-highlight">70.70</td><td class="cell-highlight">54.73</td></tr>
+          <tr><td>Punjabi</td><td>43.79</td><td>29.32</td><td class="cell-highlight">43.53</td><td class="cell-highlight">28.68</td></tr>
+          <tr><td>Kannada</td><td>65.06</td><td>45.71</td><td class="cell-highlight">60.53</td><td class="cell-highlight">41.18</td></tr>
+          <tr><td>Malayalam</td><td>59.38</td><td>55.43</td><td class="cell-highlight">55.29</td><td class="cell-highlight">44.61</td></tr>
+          <tr><td>Tamil</td><td>54.99</td><td>29.77</td><td class="cell-highlight">45.02</td><td class="cell-highlight">21.13</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="figure fig-wide" style="margin-top:40px;">
+      <img src="static/images/qualitative.png" alt="Qualitative comparison between PARSeq HTR baseline and SemiHastakshar predictions">
+      <div class="figure-caption"><strong>Figure 6.</strong> Out-of-domain evaluation on the IIIT-INDIC-HW-UC dataset comparing PARSeq HTR with SemiHastakshar. Ground truth text is shown in blue, while incorrectly predicted characters are highlighted in red.</div>
+    </div>
+
+    <h3>Ablation: Effect of Labeled Data Size</h3>
+    <p class="table-subtitle">Reducing supervised pretraining data from 60k&ndash;80k to 30k samples, on the IIIT-INDIC-HW-UC dataset. Bold indicates the better (full-data) result.</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th rowspan="2">Language</th><th colspan="2">Full Data (60k&ndash;80k)</th><th colspan="2">30k Samples</th></tr>
+          <tr><th>WER (%)</th><th>CER (%)</th><th>WER (%)</th><th>CER (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Hindi</td><td class="cell-highlight">38.62</td><td class="cell-highlight">26.49</td><td>57.89</td><td>58.73</td></tr>
+          <tr><td>Telugu</td><td class="cell-highlight">41.66</td><td class="cell-highlight">18.12</td><td>66.16</td><td>54.29</td></tr>
+          <tr><td>Bengali</td><td class="cell-highlight">29.09</td><td class="cell-highlight">14.86</td><td>41.43</td><td>22.87</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Reducing labeled data from 60k&ndash;80k to 30k leads to a consistent, substantial increase in WER and CER &mdash; sufficient supervised pretraining is crucial before the model can benefit from unlabeled data; semi-supervised fine-tuning alone cannot compensate for limited initial supervision.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ CITATION ══════════ -->
+<section>
+  <div class="container fade-in">
+    <div class="section-label">Citation</div>
+    <h2>BibTeX</h2>
+    <div class="bibtex-block" id="bibtex">
+      <button class="copy-btn" onclick="copyBibtex()">Copy</button>@inproceedings{evani2025semihastakshar,
+  abbr      = {ICVGIP},
+  title     = {SemiHastakshar: Generalizable Indic Handwritten OCR through Semi-Supervised Learning},
+  author    = {Evani, Lalitha and Mondal, Ajoy and Jawahar, C. V.},
+  booktitle = {Proceedings of the 16th Indian Conference on Computer Vision, Graphics and Image Processing (ICVGIP)},
+  pages     = {1--9},
+  publisher = {ACM},
+  year      = {2025},
+  doi       = {10.1145/3774521.3774605},
+  url       = {https://dl.acm.org/doi/abs/10.1145/3774521.3774605}
+}</div>
+  </div>
+</section>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="template-credit">
+      <p class="template-line">Want a project page like this?</p>
+      <a href="https://github.com/seemandhar/paper-template" target="_blank" class="template-btn">
+        <i class="fab fa-github"></i><span>Use this template</span>
+        <i class="fas fa-arrow-right" style="font-size:11px;opacity:0.6;"></i>
+      </a>
+      <p class="template-desc">Free, responsive, built for CVPR / ICCV / ECCV / NeurIPS project pages.</p>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-legal">
+      Template by <a href="https://seemandhar.github.io/" target="_blank">Seemandhar Jain</a>.
+      Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+      Paper &copy; 2025 the authors, licensed CC BY 4.0.
+    </p>
+  </div>
+</footer>
+
+
+<!-- PDF Viewer Modal -->
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-toolbar">
+    <div class="pdf-title" id="pdfTitle">Paper</div>
+    <div class="pdf-toolbar-actions">
+      <a class="pdf-toolbar-btn" id="pdfDownload" href="#" download>
+        <i class="fas fa-download"></i><span class="btn-label">Download</span>
+      </a>
+      <a class="pdf-toolbar-btn" id="pdfNewTab" href="#" target="_blank">
+        <i class="fas fa-external-link-alt"></i><span class="btn-label">Open in Tab</span>
+      </a>
+      <button class="pdf-toolbar-btn close-btn" onclick="closePDF()" aria-label="Close">&times;</button>
+    </div>
+  </div>
+  <iframe class="pdf-viewer-frame" id="pdfFrame" src=""></iframe>
+</div>
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
